@@ -2,10 +2,12 @@ import { useState } from 'react'
 import Icon from '../components/Icon.jsx'
 import Filters from '../components/Filters.jsx'
 import ProductCard from '../components/ProductCard.jsx'
-import { groups, products } from '../data/products.js'
 import { productCountText, selectProducts } from '../utils/catalog.js'
 
-export default function CatalogPage({ filters, setFilters }) {
+const allGroup = { id: 'all', label: 'Вся техника', icon: 'grid' }
+
+export default function CatalogPage({ catalog, filters, setFilters }) {
+  const { groups, categories, products } = catalog
   const [filtersExpanded, setFiltersExpanded] = useState(false)
   const visibleProducts = selectProducts(products, filters)
 
@@ -44,7 +46,7 @@ export default function CatalogPage({ filters, setFilters }) {
       </section>
 
       <div className="group-tabs" role="group" aria-label="Разделы каталога">
-        {groups.map((group) => (
+        {[allGroup, ...groups].map((group) => (
           <button key={group.id} className={`group-tab ${filters.group === group.id ? 'selected' : ''}`}
             aria-pressed={filters.group === group.id} onClick={() => changeFilter('group', group.id)}>
             <Icon name={group.icon} size={21} /><span>{group.label}</span>
@@ -62,7 +64,7 @@ export default function CatalogPage({ filters, setFilters }) {
 
       <button className="mobile-filter-button" aria-expanded={filtersExpanded} aria-controls="catalog-filters" onClick={() => setFiltersExpanded(!filtersExpanded)}><Icon name="filter" size={18} />{filtersExpanded ? 'Скрыть фильтры' : 'Показать фильтры'}</button>
       <div className="catalog-layout">
-        <Filters filters={filters} onChange={changeFilter} onReset={resetFilters} expanded={filtersExpanded} />
+        <Filters categories={categories} products={products} filters={filters} onChange={changeFilter} onReset={resetFilters} expanded={filtersExpanded} />
         <section className="catalog-results" aria-label="Товары">
           <div className="catalog-toolbar">
             <div className="catalog-search"><Icon name="search" size={20} />

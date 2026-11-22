@@ -1,8 +1,7 @@
 import Icon from './Icon.jsx'
-import { categories, products } from '../data/products.js'
 import { hasInvalidPriceRange } from '../utils/catalog.js'
 
-export default function Filters({ filters, onChange, onReset, expanded }) {
+export default function Filters({ categories, products, filters, onChange, onReset, expanded }) {
   const availableCategories = categories.filter((category) => filters.group === 'all' || category.group === filters.group)
   const brands = [...new Set(products.filter((product) =>
     (filters.group === 'all' || product.group === filters.group) &&

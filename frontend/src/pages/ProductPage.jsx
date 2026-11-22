@@ -1,9 +1,8 @@
 import Icon from '../components/Icon.jsx'
 import ProductCard from '../components/ProductCard.jsx'
-import { products } from '../data/products.js'
 import { formatPrice } from '../utils/catalog.js'
 
-export default function ProductPage({ product }) {
+export default function ProductPage({ product, products }) {
   const related = products.filter((item) => item.group === product.group && item.id !== product.id).slice(0, 3)
   return (
     <div className="container product-page">
